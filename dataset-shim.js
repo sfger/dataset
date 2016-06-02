@@ -1,5 +1,5 @@
 (function(HTMLElement){
-	if(!('dataset' in HTMLElement.prototype)) return;
+	if(('dataset' in HTMLElement.prototype)) return;
 	Object.defineProperty(HTMLElement.prototype, 'dataset', {
 		get: function(){
 			var ret = {};

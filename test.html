@@ -13,6 +13,7 @@
 	<script>
 	var test = document.querySelector('#test');
 	console.log(test.dataset);
+	console.log(Object.getOwnPropertyDescriptor((window.HTMLElement||window.Element).prototype, 'dataset'));
 	</script>
 </div>
 </body>
