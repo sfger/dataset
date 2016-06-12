@@ -1,5 +1,5 @@
 (function(HTMLElement){
-	if(('dataset' in HTMLElement.prototype)) return;
+	if('dataset' in HTMLElement.prototype) return;
 	Object.defineProperty(HTMLElement.prototype, 'dataset', {
 		get: function(){
 			var ret = {};
@@ -8,7 +8,7 @@
 				var name = attributes[i].name;
 				var _name = name.replace(/^data-/, '');
 				if(name!==_name){
-					_name = _name.replace(/-([\w])/g, function($0, $1){ return $1.toUpperCase(); });
+					_name = _name.replace(/-([a-zA-Z])/g, function($0, $1){ return $1.toUpperCase(); });
 					ret[_name] = attributes[i].value;
 				}
 			}
