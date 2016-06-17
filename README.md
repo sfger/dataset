@@ -20,7 +20,6 @@ test : "test"
 */
 console.log(test.dataset.test);
 console.log(test.dataset.Test);
-console.log(test.dataset.Test);
 console.log(test.dataset['--*--8-Test'])
 ```
 
