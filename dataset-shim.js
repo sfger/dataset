@@ -1,3 +1,6 @@
+/* *
+ * https://github.com/sfger/html5-dataset | Copyright sfger, water | http://kit.mit-license.org
+ * */
 (function(HTMLElement){
 	if('dataset' in HTMLElement.prototype) return;
 	var camelize = function(s){
@@ -6,28 +9,26 @@
 		});
 	};
 	var ie8 = /MSIE 8/.test(navigator.userAgent);
-	var descriptor = {
+	Object.defineProperty(HTMLElement.prototype, 'dataset', {
 		get: function(){
 			var ret = ie8 ? document.createElement('DOMStringMap') : {};
 			var attributes = this.attributes;
 			for(var i=0,il=attributes.length; i<il; i++){
-				var name = attributes[i].name;
+				var name  = attributes[i].name;
 				var _name = name.replace(/^data-/, '');
 				if(name===_name) continue;
-				var dataset_item_descriptor = (function(dom, dom_attr_name, dataset_item_val){
+				Object.defineProperty(ret, camelize(_name), (function(dom, attr_name, attr_val){
 					return {
 						get: function(){
-							return dataset_item_val;
+							return attr_val;
 						},
 						set: function(value){
-							return dom.setAttribute(dom_attr_name, value);
+							return dom.setAttribute(attr_name, value);
 						}
 					};
-				})(this, name, attributes[i].value);
-				Object.defineProperty(ret, camelize(_name), dataset_item_descriptor);
+				})(this, name, attributes[i].value));
 			}
 			return ret;
 		}
-	};
-	Object.defineProperty(HTMLElement.prototype, 'dataset', descriptor);
+	});
 })(window.HTMLElement||window.Element);
